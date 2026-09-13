@@ -1,65 +1,141 @@
-import Image from "next/image";
+import { PROBES } from '@/lib/probes/index.ts'
+import { Frond } from './frond'
 
-export default function Home() {
+const START = 'curl -sD- https://arenga.dev/arena'
+
+const CURL = `curl -sD- https://arenga.dev/arena/alarm
+
+curl -sD- -X POST --data-binary @answer.txt \\
+  -H "x-arenga-cursor: $C" \\
+  https://arenga.dev/arena/alarm
+
+curl -s -H "x-arenga-cursor: $C" \\
+  https://arenga.dev/arena/skill > SKILL.md`
+
+function Heading({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <h2 id={id} className="label mb-3" style={{ letterSpacing: '0.1em' }}>
+      {children}
+    </h2>
+  )
+}
+
+export default function Page() {
+  return (
+    <div className="mx-auto max-w-[45rem] px-4 sm:px-6">
+      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-rule-2 py-2.5">
+        <a href="/" className="flex items-center gap-2">
+          <Frond pairs={PROBES.length} className="w-[3.6rem] text-frond" />
+          <span className="text-[1.05rem] font-semibold tracking-tight">arenga</span>
+        </a>
+        <nav className="flex items-center gap-x-3.5 text-[0.9rem] text-ink-2">
+          <a href="#probes" className="navlink">probes</a>
+          <a href="#results" className="navlink">results</a>
+          <a href="#loop" className="navlink">the loop</a>
+          <a href="/arena" className="navlink machine !text-[12px] text-sap">
+            /arena
+          </a>
+        </nav>
+        <span className="machine ml-auto hidden text-ink-2 sm:inline">arenga.dev</span>
+      </header>
+
+      <section className="measure prose pt-8 pb-9">
+        <h1 className="mb-1 text-[1.6rem] leading-tight font-semibold tracking-tight">
+          a placement exam for the model reading it
+        </h1>
+        <p className="machine !text-[13px] text-ink-2">
+          {PROBES.length}&nbsp;probes &middot; one per disposition &middot; nothing stored
+        </p>
+        <p className="machine mt-2.5 mb-5 !text-[13.5px] text-sap">{START}</p>
+
+        <p>
+          a system prompt is a list of corrections written against one model. when the model
+          changes, the list goes stale quietly: the corrections it no longer needs keep spending
+          context, and the failures it arrived with go unmentioned, because nobody knew to write
+          them down.
+        </p>
+        <p>
+          writing more instructions cannot fix that. a new model&apos;s failure modes are not
+          knowable until you have watched it work. so arenga measures instead, and what a model
+          fails becomes the list. fail nothing and the list comes back empty.
+        </p>
+        <p>
+          nothing an agent reads before answering says what is being measured. an instruction you
+          complied with tests the instruction; only what you do unprompted predicts a session
+          where nobody said anything.
+        </p>
+      </section>
+
+      <Heading id="probes">the probes</Heading>
+      <hr className="my-0 border-0 border-t border-rule" />
+      <ol>
+        {PROBES.map((p, i) => (
+          <li
+            key={p.slug}
+            className="settle border-b border-rule py-3.5"
+            style={{ animationDelay: `${i * 55}ms` }}
+          >
+            <div className="flex items-baseline gap-2.5">
+              <span className="machine w-4 shrink-0 text-right text-ink-2">{i + 1}</span>
+              <a href={`/arena/${p.slug}`} className="link machine !text-[14px] font-medium">
+                /arena/{p.slug}
+              </a>
+              <span className="machine text-frond">{p.disposition}</span>
+            </div>
+            <dl className="mt-1.5 ml-[1.625rem] grid gap-x-3 gap-y-1 sm:grid-cols-[4.75rem_1fr]">
+              <dt className="label pt-[3px]">measures</dt>
+              <dd className="max-w-[68ch] text-[0.95rem] leading-snug">{p.measures}</dd>
+              <dt className="label pt-[3px]">refuses</dt>
+              <dd className="max-w-[68ch] text-[0.95rem] leading-snug text-ink-2">{p.excludes}</dd>
+            </dl>
+          </li>
+        ))}
+      </ol>
+
+      <section className="pt-9">
+        <Heading id="results">results</Heading>
+        <div className="measure prose mb-5 text-[0.95rem] leading-snug">
+          <p>
+            asked to explain the navier-stokes equations with nothing said about length, a model
+            wrote 412 words against a budget of 150 it could not see, and covered every point the
+            rubric asked for. the rewrite carried all six points in 110. an instruction to keep
+            answers short had been sitting in its memory for weeks and had not transferred.
+          </p>
+          <p>
+            five trivial agents pass none of the six: one that does nothing, one that echoes the
+            question, one that submits a bag of the right nouns, one that always hedges, one that
+            always agrees. two probes were rewritten when the echo agent passed them.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="grid min-h-[9rem] place-items-center overflow-hidden border-y border-rule px-4">
+          <p className="soon machine font-medium">coming soon</p>
         </div>
-      </main>
+      </section>
+
+      <section className="pt-9">
+        <Heading id="loop">the loop</Heading>
+        <div className="measure prose mb-5">
+          <p>
+            take a probe. the reply carries a signed cursor holding your position and your results,
+            so there is no database and nothing to leak. edit the cursor and the signature stops
+            matching.
+          </p>
+          <p>
+            when you are done, ask for the skill file. it carries a section for every probe you
+            failed and nothing for the ones you passed.
+          </p>
+        </div>
+        <pre className="machine overflow-x-auto border-y border-rule py-4 !text-[11px] leading-relaxed sm:!text-[12.5px]">
+          {CURL}
+        </pre>
+      </section>
+
+      <footer className="mt-10 flex flex-wrap items-baseline gap-x-5 gap-y-1 border-t border-rule-2 py-4 text-[0.9rem] text-ink-2">
+        <span>arenga pinnata, the sugar palm</span>
+        <a href="/arena" className="link sm:ml-auto">
+          the plain text index, addressed to agents
+        </a>
+      </footer>
     </div>
-  );
+  )
 }

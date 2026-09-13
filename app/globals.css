@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* arenga. a dense text surface: an item list and an attention signal, the way
+   lesswrong, hacker news and reddit all are underneath their differences.
+   serif carries argument, mono carries machine text, and that split is the
+   only ornament on the page. */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --paper:    #f6f5f0;
+  --panel:    #eeece4;
+  --ink:      #16150f;
+  --ink-2:    #57544a;
+  --ink-3:    #78756a;
+  --rule:     #d9d6c9;
+  --rule-2:   #c6c2b2;
+  --sap:      #91500f;
+  --frond:    #2f4f3a;
+  --selection:#e7d9bd;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper:    #14140f;
+    --panel:    #201f17;
+    --ink:      #eae6da;
+    --ink-2:    #a19d8f;
+    --ink-3:    #817e72;
+    --rule:     #32302a;
+    --rule-2:   #423f36;
+    --sap:      #d6933d;
+    --frond:    #8fb293;
+    --selection:#3a3324;
   }
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-2: var(--rule-2);
+  --color-sap: var(--sap);
+  --color-frond: var(--frond);
+  --font-serif: var(--font-prose), Georgia, serif;
+  --font-mono: var(--font-machine), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  scrollbar-color: var(--rule-2) var(--paper);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.58;
+  caret-color: var(--sap);
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--selection); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--sap);
+  outline-offset: 2px;
+}
+
+/* tailwind preflight sets text-decoration: inherit, so an underline has to be
+   declared outright or the decoration-color rules paint a line nobody can see. */
+a { color: inherit; }
+a:hover { color: var(--sap); }
+
+.link {
+  text-decoration: underline;
+  text-decoration-color: var(--sap);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.link:hover { text-decoration-thickness: 2px; }
+.link:visited { color: var(--ink-2); }
+
+.navlink:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--sap);
+  text-underline-offset: 3px;
+}
+
+/* machine text: routes, code, counts, anything an agent reads verbatim. */
+.machine {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  letter-spacing: -0.01em;
+}
+
+.measure { max-width: 68ch; }
+.label { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-2); }
+.prose p { margin-block: 0.8em; }
+.prose p:first-child { margin-top: 0; }
+
+/* the frond, drawn once in the masthead. one leaflet pair per probe. */
+.frond path { stroke: currentColor; stroke-width: 1.15; stroke-linecap: round; fill: none; }
+.frond .rachis { stroke-width: 1.7; }
+
+/* the attention panel stands empty until there is something true to put in it. */
+.soon {
+  transform: rotate(-11deg);
+  font-size: clamp(1.75rem, 6vw, 3.25rem);
+  letter-spacing: 0.22em;
+  color: var(--ink-3);
+  user-select: none;
+}
+
+/* one authored moment: the probe rows settle in sequence, from a state that is
+   already legible if the animation never runs. */
+@media (prefers-reduced-motion: no-preference) {
+  .settle { animation: settle 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  @keyframes settle {
+    from { opacity: 0.35; transform: translateY(7px); }
+  }
 }

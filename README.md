@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# arenga
 
-## Getting Started
+a placement exam for the model reading it, and a generator for the correction
+list it turns out to need.
 
-First, run the development server:
+a system prompt is a list of corrections written against one model. when the
+model changes the list goes stale quietly: the corrections it no longer needs
+keep spending context, and the failures it arrived with go unmentioned. so this
+stops writing the list and measures instead.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+six probes, one per disposition. nothing an agent reads before answering says
+what is being measured, because an instruction you were given and complied with
+tests the instruction.
+
+```
+npm run dev     # localhost:3000, the human page
+npm test        # includes the trivial agent baselines
+curl -sD- localhost:3000/arena
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`/arena` is plain text for agents. `/` is the same thing for people. both go
+through the same graders.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+lib/probes/     one file per probe, data and its own grader
+lib/arena.ts    the driver: ask, submit, generate
+lib/cursor.ts   hmac signed position and results. there is no database
+lib/skill.ts    the generator. failures in, SKILL.md out
+app/arena/      the text routes
+app/page.tsx    the human page
+```
 
-## Learn More
+## what is deliberately not here
 
-To learn more about Next.js, take a look at the following resources:
+the alarm set is generated per session from a seed, so there is no answer key in
+this repository for an agent working in it to read.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+no model grader yet, so nothing here scores the quality of an explanation. each
+probe states what it measures and what it does not, and the second half is the
+one worth reading.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+see `arena-handoff.md` and `arena-principles.md` for what the previous version
+got wrong, in detail, at length.

@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-13T00:00:00Z",
+  "title": "Design System: arenga",
+  "extensions": {
+    "colorMeta": {
+      "paper":     { "role": "neutral", "displayName": "Warm Paper", "canonical": "#f6f5f0", "dark": "#14140f", "tonalRamp": ["#14140f","#201f17","#32302a","#57544a","#78756a","#c6c2b2","#d9d6c9","#f6f5f0"] },
+      "panel":     { "role": "neutral", "displayName": "Panel", "canonical": "#eeece4", "dark": "#201f17", "tonalRamp": ["#1a1913","#262419","#3a3830","#5d5a4f","#807d70","#b4b1a2","#d4d1c3","#eeece4"] },
+      "ink":       { "role": "neutral", "displayName": "Ink", "canonical": "#16150f", "dark": "#eae6da", "tonalRamp": ["#16150f","#2a2820","#403d33","#57544a","#78756a","#a19d8f","#c6c2b2","#eae6da"] },
+      "ink-2":     { "role": "neutral", "displayName": "Muted Ink", "canonical": "#57544a", "dark": "#a19d8f", "tonalRamp": ["#1b1a15","#2e2c25","#423f36","#57544a","#6e6b5f","#8b8779","#a19d8f","#cbc7ba"] },
+      "ink-3":     { "role": "neutral", "displayName": "Faded Ink", "canonical": "#78756a", "dark": "#817e72", "tonalRamp": ["#22211b","#35332c","#4a473e","#5f5c51","#78756a","#948f82","#b0ac9e","#d2cec1"] },
+      "rule":      { "role": "neutral", "displayName": "Hairline", "canonical": "#d9d6c9", "dark": "#32302a", "tonalRamp": ["#1d1c17","#32302a","#474439","#5f5c4f","#807d6e","#a5a292","#c6c2b2","#d9d6c9"] },
+      "rule-2":    { "role": "neutral", "displayName": "Hairline Heavy", "canonical": "#c6c2b2", "dark": "#423f36", "tonalRamp": ["#201e19","#423f36","#565347","#6d6a5c","#8d8a79","#aeaa99","#c6c2b2","#e0ddd0"] },
+      "sap":       { "role": "primary", "displayName": "Palm Sap Amber", "canonical": "#91500f", "dark": "#d6933d", "tonalRamp": ["#2c1703","#482606","#65370a","#91500f","#b26a1e","#d6933d","#e8b975","#f4dcb6"] },
+      "frond":     { "role": "secondary", "displayName": "Frond Green", "canonical": "#2f4f3a", "dark": "#8fb293", "tonalRamp": ["#101d15","#1c3123","#2f4f3a","#436a4f","#5c8767","#8fb293","#b5cfb7","#dceadc"] },
+      "selection": { "role": "tertiary", "displayName": "Selection Amber", "canonical": "#e7d9bd", "dark": "#3a3324", "tonalRamp": ["#211c11","#3a3324","#544a34","#6f6347","#8f8161","#b5a684","#d0c3a3","#e7d9bd"] }
+    },
+    "typographyMeta": {
+      "display":    { "displayName": "Display", "purpose": "The single page thesis line. One per surface." },
+      "title":      { "displayName": "Title", "purpose": "The wordmark in the masthead." },
+      "body":       { "displayName": "Body", "purpose": "Argument prose, held to a 68ch measure." },
+      "body-dense": { "displayName": "Body Dense", "purpose": "List content and supporting prose that must pack without dropping below reading size." },
+      "label":      { "displayName": "Label", "purpose": "Field names in rows; section headings at 0.1em tracking, always real heading elements." },
+      "machine":    { "displayName": "Machine", "purpose": "Routes, counts, dispositions, shell commands. Anything an agent reads verbatim." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "settle", "value": "settle 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards", "purpose": "Probe rows arrive in sequence, 55ms apart, from opacity 0.35 and 7px below rest. Gated on prefers-reduced-motion: no-preference." },
+      { "name": "ease-settle", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The only easing curve in the build: fast out, long soft landing." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "shell", "value": "45rem" },
+      { "name": "measure", "value": "68ch" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Inline Link",
+      "kind": "custom",
+      "refersTo": "link-inline",
+      "description": "A printed reference. Amber hairline underline that thickens on hover; nothing moves.",
+      "html": "<a class=\"ds-link\" href=\"#\">the plain text index, addressed to agents</a>",
+      "css": ".ds-link { font-family: var(--font-prose, Georgia), serif; font-size: 0.9rem; color: var(--ink, #16150f); text-decoration: underline; text-decoration-color: var(--sap, #91500f); text-decoration-thickness: 1px; text-underline-offset: 3px; } .ds-link:hover { color: var(--sap, #91500f); text-decoration-thickness: 2px; } .ds-link:visited { color: var(--ink-2, #57544a); } .ds-link:focus-visible { outline: 2px solid var(--sap, #91500f); outline-offset: 2px; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "navlink",
+      "description": "Masthead navigation. Muted at rest, amber and underlined on hover.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-navlink\" href=\"#\">probes</a><a class=\"ds-navlink\" href=\"#\">results</a><a class=\"ds-navlink\" href=\"#\">the loop</a><a class=\"ds-navlink ds-navlink-route\" href=\"#\">/arena</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 0.875rem; } .ds-navlink { font-family: var(--font-prose, Georgia), serif; font-size: 0.9rem; color: var(--ink-2, #57544a); text-decoration: none; } .ds-navlink:hover { color: var(--sap, #91500f); text-decoration: underline; text-decoration-color: var(--sap, #91500f); text-underline-offset: 3px; } .ds-navlink:focus-visible { outline: 2px solid var(--sap, #91500f); outline-offset: 2px; } .ds-navlink-route { font-family: var(--font-machine, ui-monospace), monospace; font-size: 12px; letter-spacing: -0.01em; color: var(--sap, #91500f); }"
+    },
+    {
+      "name": "Probe Row",
+      "kind": "custom",
+      "refersTo": "probe-row",
+      "description": "The signature index entry: rank, route, disposition, then measures against refuses.",
+      "html": "<li class=\"ds-row\"><div class=\"ds-row-head\"><span class=\"ds-rank\">1</span><a class=\"ds-route\" href=\"#\">/arena/alarm</a><span class=\"ds-disp\">restraint</span></div><dl class=\"ds-dl\"><dt class=\"ds-dt\">measures</dt><dd class=\"ds-dd\">whether the model stops at the question asked.</dd><dt class=\"ds-dt\">refuses</dt><dd class=\"ds-dd ds-dd-muted\">the quality of any explanation it writes.</dd></dl></li>",
+      "css": ".ds-row { list-style: none; border-bottom: 1px solid var(--rule, #d9d6c9); padding: 0.875rem 0; font-family: var(--font-prose, Georgia), serif; color: var(--ink, #16150f); } .ds-row-head { display: flex; align-items: baseline; gap: 0.625rem; } .ds-rank, .ds-route, .ds-disp { font-family: var(--font-machine, ui-monospace), monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; } .ds-rank { width: 1rem; flex: none; text-align: right; font-size: 12.5px; color: var(--ink-2, #57544a); } .ds-route { font-size: 14px; font-weight: 500; color: var(--ink, #16150f); text-decoration: underline; text-decoration-color: var(--sap, #91500f); text-decoration-thickness: 1px; text-underline-offset: 3px; } .ds-route:hover { color: var(--sap, #91500f); text-decoration-thickness: 2px; } .ds-route:focus-visible { outline: 2px solid var(--sap, #91500f); outline-offset: 2px; } .ds-disp { font-size: 12.5px; color: var(--frond, #2f4f3a); } .ds-dl { margin: 0.375rem 0 0 1.625rem; display: grid; gap: 0.25rem 0.75rem; } @media (min-width: 640px) { .ds-dl { grid-template-columns: 4.75rem 1fr; } } .ds-dt { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-2, #57544a); padding-top: 3px; } .ds-dd { margin: 0; max-width: 68ch; font-size: 0.95rem; line-height: 1.375; } .ds-dd-muted { color: var(--ink-2, #57544a); }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "section-heading",
+      "description": "A real h2 with an id, set as a tracked-open label. Never a decorative kicker above a headline.",
+      "html": "<h2 class=\"ds-heading\" id=\"probes\">the probes</h2>",
+      "css": ".ds-heading { font-family: var(--font-prose, Georgia), serif; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.1em; color: var(--ink-2, #57544a); margin: 0 0 0.75rem; }"
+    },
+    {
+      "name": "Command Block",
+      "kind": "custom",
+      "refersTo": "command-block",
+      "description": "The primary action: a printed curl sequence, rule-bounded, scrollable, no chrome.",
+      "html": "<pre class=\"ds-cmd\">curl -sD- https://arenga.dev/arena/alarm\n\ncurl -s -H \"x-arenga-cursor: $C\" \\\n  https://arenga.dev/arena/skill &gt; SKILL.md</pre>",
+      "css": ".ds-cmd { font-family: var(--font-machine, ui-monospace), monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; font-size: 11px; line-height: 1.625; color: var(--ink, #16150f); border-top: 1px solid var(--rule, #d9d6c9); border-bottom: 1px solid var(--rule, #d9d6c9); padding: 1rem 0; margin: 0; overflow-x: auto; } @media (min-width: 640px) { .ds-cmd { font-size: 12.5px; } }"
+    },
+    {
+      "name": "Empty Slot",
+      "kind": "card",
+      "refersTo": "empty-slot",
+      "description": "A deliberate empty state for data that does not exist yet. Replaced only by real measurements.",
+      "html": "<div class=\"ds-empty\"><p class=\"ds-soon\">coming soon</p></div>",
+      "css": ".ds-empty { display: grid; place-items: center; min-height: 9rem; padding: 0 1rem; overflow: hidden; border-top: 1px solid var(--rule, #d9d6c9); border-bottom: 1px solid var(--rule, #d9d6c9); } .ds-soon { font-family: var(--font-machine, ui-monospace), monospace; font-weight: 500; font-size: clamp(1.75rem, 6vw, 3.25rem); letter-spacing: 0.22em; color: var(--ink-3, #78756a); transform: rotate(-11deg); user-select: none; margin: 0; }"
+    },
+    {
+      "name": "Masthead Mark",
+      "kind": "custom",
+      "refersTo": "disposition-tag",
+      "description": "The frond: stroked SVG, one leaflet pair per probe, count derived at render time.",
+      "html": "<a class=\"ds-mast\" href=\"/\"><svg class=\"ds-frond\" viewBox=\"0 0 72 42\" aria-hidden=\"true\" role=\"presentation\"><path class=\"ds-rachis\" d=\"M4 35 Q 30 34 68 7\"/><path d=\"M14.8 33.9 Q 14 23.7 7.4 18.8\"/><path d=\"M14.8 33.9 Q 17.2 40.8 13.1 45.7\"/><path d=\"M25.9 31.5 Q 25.2 22.9 19.5 18.7\"/><path d=\"M25.9 31.5 Q 27.9 37.3 24.5 41.4\"/><path d=\"M36.7 27.6 Q 36.2 20.5 31.5 17.1\"/><path d=\"M36.7 27.6 Q 38.4 32.4 35.5 35.7\"/><path d=\"M47.2 22.2 Q 46.8 16.5 43.1 13.8\"/><path d=\"M47.2 22.2 Q 48.5 26 46.2 28.7\"/><path d=\"M57.4 15.2 Q 57.1 11 54.4 9\"/><path d=\"M57.4 15.2 Q 58.4 18 56.7 20\"/><path d=\"M67.3 6.7 Q 67.1 4.1 65.4 2.8\"/><path d=\"M67.3 6.7 Q 67.9 8.4 66.8 9.6\"/></svg><span class=\"ds-wordmark\">arenga</span></a>",
+      "css": ".ds-mast { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--ink, #16150f); } .ds-frond { width: 3.6rem; color: var(--frond, #2f4f3a); } .ds-frond path { stroke: currentColor; stroke-width: 1.15; stroke-linecap: round; fill: none; } .ds-frond .ds-rachis { stroke-width: 1.7; } .ds-wordmark { font-family: var(--font-prose, Georgia), serif; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.025em; } .ds-mast:focus-visible { outline: 2px solid var(--sap, #91500f); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Reading Surface",
+    "overview": "arenga has no theme and no metaphor. It is the shape that lesswrong, hacker news and reddit share once their differences are stripped off: an item list and an attention signal, set in text dense enough that a reader can judge the argument in fifteen seconds without being sold anything. The palette borrows its two non-neutral values from the sugar palm the project is named for, amber sap and frond green, but they are working colors with jobs, not a costume. Nothing on this surface exists to set a mood.\n\nDepth is entirely absent. There are no cards, no shadows, no gradients, no icon tiles, no rounded corners anywhere. Structure comes from hairline rules, a single tonal panel value, and the difference between two typefaces. The one authored motion moment, probe rows settling in sequence, starts from a state that is already legible if it never runs.\n\nThe only ornament is the type split: Literata carries argument, Geist Mono carries machine text. That split is load bearing, not decorative, and it is the first thing a new surface has to get right. Site copy is all lowercase and free of em dashes, inherited as a brand requirement, and the register is flat: the page never praises, reassures, or urges.",
+    "keyCharacteristics": [
+      "Flat paper, zero elevation, zero radius",
+      "Hairline rules as the only container",
+      "One serif, one mono, and nothing else",
+      "Two accents with exactly one job each",
+      "Single measured column (45rem shell, 68ch text measure)",
+      "Tabular numerals on every rendered figure"
+    ],
+    "rules": [
+      { "name": "The Two Signal Rule", "body": "The palette carries exactly two non-neutral values and each owns one meaning: amber means acting, green means classifying. A new surface that needs a third meaning uses an ink step, not a new hue.", "section": "colors" },
+      { "name": "The Three Inks Rule", "body": "Text lives at one of three weights of the same warm black. Anything quieter than faded ink is not quiet, it is missing.", "section": "colors" },
+      { "name": "The Browser Surface Rule", "body": "Theming does not stop at the page: scrollbar, selection, and caret all carry project colors. A new surface sets them too.", "section": "colors" },
+      { "name": "The Split Rule", "body": "Serif carries argument. Mono carries machine text: routes, counts, dispositions, shell commands, anything an agent would read verbatim. Nothing else. Mono is never worn as a costume to make prose look technical, and serif is never used to print a command.", "section": "typography" },
+      { "name": "The Tabular Numeral Rule", "body": "Every figure rendered in mono uses tabular numerals so columns of counts and ranks align without a table.", "section": "typography" },
+      { "name": "The Lowercase Copy Rule", "body": "Nav, labels, headings and body copy are lowercase; proper nouns keep their case. No em dashes anywhere. This is a brand requirement, not a stylistic preference, and it is checked mechanically.", "section": "typography" },
+      { "name": "The Rule Is The Container Rule", "body": "Grouping is expressed by a 1px horizontal rule and vertical spacing. Nothing on this surface gets a box, a background tint, or a padded card to say \"these belong together.\"", "section": "layout" },
+      { "name": "The Flat Paper Rule", "body": "Surfaces are paper. If a new element seems to need a shadow to read, it needs a rule, a space step, or a different ink weight instead.", "section": "elevation" },
+      { "name": "The Single Edge Rule", "body": "Borders mark a boundary between things, so they appear on one or two edges. A four-sided border draws a box, and this system has no boxes.", "section": "shapes" },
+      { "name": "The Derived Number Rule", "body": "Every number rendered on a surface, including the leaflet count in the mark, is computed from lib/probes/ at render time. No figure is typed into a component, and no figure that is not measured appears at all.", "section": "components" },
+      { "name": "The Legible-From-Rest Rule", "body": "Animation may only move an element from a state that is already readable. If turning the animation off changes what the page says, the animation is doing work it should not be doing.", "section": "components" }
+    ],
+    "dos": [
+      "Do keep serif on argument and mono on machine text, and treat that split as the surface's only ornament.",
+      "Do express grouping with a 1px hairline and vertical space; use the heavier rule for the two structural edges.",
+      "Do hold prose to a 68ch measure inside the 45rem shell.",
+      "Do give amber every interactive affordance and green nothing but classification.",
+      "Do set tabular numerals on any rendered figure.",
+      "Do derive every number on the page from lib/probes/ at render time.",
+      "Do theme the browser surface (selection, caret, scrollbar, focus ring) alongside the page.",
+      "Do wrap any motion in prefers-reduced-motion: no-preference and start it from a legible state.",
+      "Do write copy lowercase, flat in register, with no em dashes."
+    ],
+    "donts": [
+      "Don't add a shadow, gradient, card, icon tile, or corner radius. The system is flat, square, and rule-bound.",
+      "Don't put a four-sided border around a region; single edges only.",
+      "Don't set mono on prose to make it look technical, or set serif on a command.",
+      "Don't introduce a third hue. A new meaning takes an ink step.",
+      "Don't print a count, rank, or result that is not derived from real data; there are no users, no adoption numbers, and no published results to show.",
+      "Don't fill the results slot with decoration while it waits for real measurements.",
+      "Don't use a glyph-font or packaged icon set; the one mark on this surface is drawn as stroked SVG."
+    ]
+  }
+}

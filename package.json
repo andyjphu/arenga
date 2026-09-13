@@ -1,12 +1,13 @@
 {
-  "name": "nextjs",
+  "name": "arenga",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test lib/*.test.ts"
   },
   "dependencies": {
     "next": "16.2.4",
